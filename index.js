@@ -1,3 +1,5 @@
+//Game of life
+
 let cols = 110;
 let rows = 70;
 let borderThick = 1;
