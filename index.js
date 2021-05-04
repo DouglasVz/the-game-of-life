@@ -1,7 +1,7 @@
 let cols = 110;
 let rows = 70;
 let borderThick = 1;
-let cellSize = 5;
+let cellSize = 8;
 let cells = new Array(rows * cols);
 cells.fill(false);
 
@@ -70,7 +70,6 @@ function rapido() {
 
 }
 function muyRapido() {
-
     vel = 10;
     console.log(vel)
     document.getElementById("muyLento").innerHTML = "Muy lento"
@@ -78,26 +77,31 @@ function muyRapido() {
     document.getElementById("normal").innerHTML = "Normal"
     document.getElementById("rapido").innerHTML = "Rápido"
     document.getElementById("muyRapido").innerHTML = "&#10004; Muy rápido"
-
     document.getElementById("speedLNR").innerHTML = "Muy rápido >"
-
 
 }
 
-
-
 //Creo canvas desde javascript. Las medidas del canvas están en función del número de columnas y celdas.
 let canvas = document.createElement("canvas");
-//canvas.setAttribute("width", (cols * (cellSize + borderThick) + borderThick).toString());
-//canvas.setAttribute("height", (rows * (cellSize + borderThick) + borderThick).toString());
-canvas.setAttribute("width", '661');
-canvas.setAttribute("height", '421');
+canvas.setAttribute("width", (cols * (cellSize + borderThick) + borderThick).toString());
+canvas.setAttribute("height", (rows * (cellSize + borderThick) + borderThick).toString());
+//canvas.setAttribute("width", '661');
+//canvas.setAttribute("height", '421');
 
 let canvasContainer = document.getElementById("canvas_container");
 canvasContainer.appendChild(canvas);
-canvasContainer.setAttribute("width", canvas.width.toString());
-canvasContainer.setAttribute("height", canvas.height.toString());
+
 let ctx = canvas.getContext("2d");
+
+//Media query
+let media = window.matchMedia("(max-width: 1000px)");
+function checkViewport(media) {
+    if (media.matches) {
+        aleatorio();
+    }
+}
+media.addEventListener("change", checkViewport);
+checkViewport(media);
 
 //Introduciendo vídeo
 let whatch = document.getElementById('whatch_cont');
@@ -105,354 +109,17 @@ whatch.onclick = options;
 
 function options() {
     let counters = document.getElementById('id_counters_container');
+    let canvasButtons = document.getElementById('canvas-buttons');
     counters.style.display = 'none';
     canvas.style.display = 'none';
+    canvasButtons.style.display = "none";
     let body = document.getElementsByTagName('body');
     let div = document.createElement('div');
     div.setAttribute('id', 'div_video');
     body[0].appendChild(div);
     canvasContainer.parentNode.insertBefore(div, canvasContainer);
     div.innerHTML = `<iframe  width="100%" height="100%" src="https://www.youtube.com/embed/R9Plq-D1gEk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-    let style = document.getElementsByTagName('style');
-    style[0].innerHTML = `  
-   body{
-    margin: 0;
-    font-family: Cambria;
- }
-
- .header{
     
-    width: 100%;
-    height: 10%;
-    padding-top: 1rem;
-    padding-bottom: 1.5rem;
-    border-bottom: solid thin rgb(185, 185, 185);
-    
- }
-.title {
-    position: relative;
-    left: 8%;
-    margin: 0;;
-}
-#whatch_cont, #play_cont {
-    position: relative;
-    width: 5rem;
-    
-    bottom: 0;
-    margin: 0 10% 0 10%; 
-    cursor: pointer;
-}
-#whatch_cont {
-    left: 70%;
-    right: 40%;
-}
-
-#play_cont {
-    left: 80%;
-    right: 30%;
-}
-
-#whatch_cont h3, #play_cont h3{
-    position: absolute;
-    margin: 0;
-    bottom: 0;
-}
-
-.counters_container {
-    display: flex;
-    justify-content: flex-start;
-    width: 661px;
-    margin-left: 8%;
-}
-
-#counterDeads {
-    margin-left: 3%;
-}
-
-#canvas_container {
-    width: 661px;
-    position: relative;
-    left: 8%;
-    right: 43%;
-    margin-left: 0;
-    margin-right: 0;
-}
-
-canvas {
-    background-color: rgb(0, 0, 0);
-    
-
-
-}
-
-#start {
-    width: 5rem;
-    position: absolute;
-    left: 3%;
-    bottom: 4%;
-    background-color: rgba(161, 161, 161, 0.616);
-    border: none;
-    display: none;
-    font-family: Cambria;
-    color: rgb(240, 239, 239);
-}
-
-#grill {
-    width: 5rem;
-    position: absolute;
-    left: 20%;
-    bottom: 4%;
-    background-color: rgba(161, 161, 161, 0.616);
-    border: none;
-    display: none;
-    color: rgb(240, 239, 239);
-}
-
-#setting,
-#setting_label {
-    width: 5rem;
-    position: absolute;
-    right: 3%;
-    bottom: 4%;
-    background-color: rgba(161, 161, 161, 0.616);
-    border: none;
-    display: none;
-    padding-left: 1rem;
-    box-sizing: border-box;
-    color: rgb(230, 230, 230);
-    cursor: pointer;
-}
-
-#canvas_container:hover #start {
-    display: block;
-}
-
-#canvas_container:hover #grill {
-    display: block;
-}
-
-#canvas_container:hover #setting_label {
-    display: block;
-}
-
-#start,
-#setting,
-#grill:hover {
-    cursor: pointer;
-}
-
-.setting_container {
-    position: absolute;
-    width: 20rem;
-    height: 8rem;
-    background-color: rgba(161, 161, 161, 0.616);
-    right: 3%;
-    bottom: 10%;
-    display: none;
-    opacity: 1;
-    transition: opacity .3s;
-    
-}
-
-#div_video {
-    position: relative;
-    width: 50vw;
-    height: 65vh;
-    left: 8%;
-    right: 42%;
-    margin-top: 3%;
-
-}
-
-
-
-#mode_input {
-    display: none;
-}
-
-.mode {
-    display: flex;
-    width: 100%;
-    background-color: transparent;
-    border: none;
-    justify-content: space-between;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    margin-top: 0.5rem;
-    box-sizing: border-box;
-    color: rgb(240, 239, 239);
-}
-
-.speed_a, .mode_a {
-    text-decoration: none;
-    color: rgb(0, 0, 0);
-}
-
-.speed {
-    display: flex;
-    width: 100%;
-    background-color: transparent;
-    border: none;
-    justify-content: space-between;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    margin-top: 0.5rem;
-    box-sizing: border-box;
-    color: rgb(240, 239, 239);
-}
-
-.speed:hover,
-.mode:hover {
-    background-color: rgba(70, 69, 69, 0.616);
-    cursor: pointer;
-}
-
-.speed_container {
-    position: absolute;
-    width: 15rem;
-    height: 20rem;
-    background-color: rgba(161, 161, 161, 0.616);
-    right: 3%;
-    bottom: 10%;
-    display: none;
-    opacity: 1;
-    transition: opacity .3s;
-}
-
-.speed_container div {
-    margin-top: 0.5rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    padding-top: 0.1rem;
-    padding-bottom: 0.1rem;
-    cursor: pointer;
-    color: rgb(240, 239, 239);
-
-}
-
-.speed_container div:hover {
-    background-color: rgba(70, 69, 69, 0.616);
-}
-
-/*Contenedor del Mode*/
-
-.mode_container{
-    width: 13rem;
-    height: 8.5rem;
-    position: absolute;
-    background-color:rgba(161, 161, 161, 0.616);
-    bottom: 10%;
-    right: 3%;
-    display: none;
-    opacity: 1;
-    transition: opacity .3s;
-}
-.mode_container div{
-    margin-top: 0.5rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    padding-top: 0.1rem;
-    padding-bottom: 0.1rem;
-    cursor: pointer;
-    color: rgb(240, 239, 239);
-}
-.mode_container div:hover{
-      background-color: rgba(70, 69, 69, 0.616);
-}
-
-
-/* Contenedor de Intrucciones*/
-
-.concept_container {
-    width: 30%;
-    height: 85%;
-    margin-bottom: 1rem;
-    background-color: rgb(241, 241, 241);
-    position: absolute;
-    top: 15%;
-    right: 8%;
-    left: 62%;
-    padding: 0 2rem;
-    box-sizing: border-box;
-    overflow-y: scroll;
-}
-
-@media (max-width: 1130px) {
-    body {
-        display: block;
-    }
-
-    .concept_container {
-        position: static;
-        width: 100%;
-        left: 0;
-        right: 0;
-        background-color: white;
-        overflow-y: hidden;
-    }
-
-    #div_video {
-        width: 70%;
-    }
-    #canvas_container {
-        left: 50%;
-        right: 50%;
-        transform: translateX(-50%);
-        
-
-    }
-    .counters_container{
-        margin-left: 20%
-    }
-}
-
-@media (max-width: 800px) {
-    body {
-        margin: 0;
-    }
-
-    canvas {
-        width: 100vw;
-
-    }
-
-    #div_video {
-        width: 100%;
-        height: 65vh;
-        left: 0;
-        right: 0;
-    }
-    .title{
-        font-size: 1rem;
-    }
-    #whatch_cont h3, #play_cont h3{
-        font-size: 0.8rem;
-    }
-    #canvas_container {
-        left: 0;
-        right: 0;
-        transform: translateX(0);
-        
-
-    }
-}
-
-@media (max-width: 480px) {
-    #div_video {
-        height: 30vh;
-    }
-    
-    .title{
-        width: 40%;
-    }
-    #whatch_cont{
-        left:60%;
-        right: 40%;
-    }
-   
-}
-    
- `
 }
 
 //Introduciendo canvas de nuevo
@@ -461,10 +128,12 @@ play.onclick = optionPlay;
 
 function optionPlay(){
     let div = document.getElementById('div_video');
-    div.remove();
-    canvas.style.display = 'block';
     let counters = document.getElementById('id_counters_container');
+    let canvasButtons = document.getElementById('canvas-buttons');
+    div.remove(); 
     counters.style.display = 'flex';
+    canvas.style.display = 'block';
+    canvasButtons.style.display = "flex";
 }
 //Evento click
 canvas.addEventListener("click", event => {
@@ -477,6 +146,8 @@ function clickEvent(event) {
     let rect = canvas.getBoundingClientRect()
     let x = event.clientX - rect.left;
     let y = event.clientY - rect.top;
+    console.log(rect)
+    console.log(event.clientX)
     let indice = cellIndex(x, y);
     let state = !cells[indice];
 
