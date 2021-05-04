@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 
@@ -520,4 +521,515 @@
 
 </body>
 
+=======
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Game of life</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Cambria;
+        }
+
+        .header {
+
+            width: 100%;
+            height: 10%;
+            padding-top: 1rem;
+            padding-bottom: 1.5rem;
+            border-bottom: solid thin rgb(185, 185, 185);
+
+        }
+
+        .title {
+            position: relative;
+            width: 30%;
+            left: 8%;
+            margin: 0;
+            font-size: 2rem;
+            
+        }
+
+        #whatch_cont,
+        #play_cont {
+            position: relative;
+            width: 5rem;
+
+            bottom: 0;
+            margin: 0 10% 0 10%;
+            cursor: pointer;
+        }
+
+        #whatch_cont {
+            left: 70%;
+            right: 40%;
+        }
+
+        #play_cont {
+            left: 80%;
+            right: 30%;
+        }
+
+        #whatch_cont h3,
+        #play_cont h3 {
+            position: absolute;
+            margin:0;
+            bottom: 0;
+        }
+
+        #whatch_cont:hover{
+            color: rgb(114, 114, 114);
+        }
+        #play_cont:hover{
+            color: rgb(114, 114, 114);
+        }
+        #whatch_cont:focus{
+            color: rgb(114, 114, 114);
+        }
+
+
+        .counters_container {
+            display: flex;
+            justify-content: flex-start;
+            width: 661px;
+            margin-left: 8%;
+        }
+
+        #counterDeads {
+            margin-left: 3%;
+        }
+
+        #canvas_container {
+            width: 661px;
+            position: relative;
+            left: 8%;
+            right: 43%;
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+        canvas {
+            background-color: rgb(0, 0, 0);
+
+
+
+        }
+
+        #start {
+            width: 5rem;
+            position: absolute;
+            left: 3%;
+            bottom: 4%;
+            background-color: rgba(161, 161, 161, 0.616);
+            border: none;
+            display: none;
+            font-family: Cambria;
+            color: rgb(240, 239, 239);
+        }
+
+        #grill {
+            width: 5rem;
+            position: absolute;
+            left: 20%;
+            bottom: 4%;
+            background-color: rgba(161, 161, 161, 0.616);
+            border: none;
+            display: none;
+            color: rgb(240, 239, 239);
+        }
+
+        #setting,
+        #setting_label {
+            width: 5rem;
+            position: absolute;
+            right: 3%;
+            bottom: 4%;
+            background-color: rgba(161, 161, 161, 0.616);
+            border: none;
+            display: none;
+            padding-left: 1rem;
+            box-sizing: border-box;
+            color: rgb(230, 230, 230);
+            cursor: pointer;
+        }
+
+        #canvas_container:hover #start {
+            display: block;
+        }
+
+        #canvas_container:hover #grill {
+            display: block;
+        }
+
+        #canvas_container:hover #setting_label {
+            display: block;
+        }
+
+        #start,
+        #setting,
+        #grill:hover {
+            cursor: pointer;
+        }
+
+        .setting_container {
+            position: absolute;
+            width: 20rem;
+            height: 8rem;
+            background-color: rgba(161, 161, 161, 0.616);
+            right: 3%;
+            bottom: 10%;
+            display: none;
+            opacity: 1;
+            transition: opacity .3s;
+
+        }
+
+
+
+        #mode_input {
+            display: none;
+        }
+
+        .mode {
+            display: flex;
+            width: 100%;
+            background-color: transparent;
+            border: none;
+            justify-content: space-between;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            margin-top: 0.5rem;
+            box-sizing: border-box;
+            color: rgb(240, 239, 239);
+        }
+
+        .speed_a,
+        .mode_a {
+            text-decoration: none;
+            color: rgb(0, 0, 0);
+        }
+
+        .speed {
+            display: flex;
+            width: 100%;
+            background-color: transparent;
+            border: none;
+            justify-content: space-between;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            margin-top: 0.5rem;
+            box-sizing: border-box;
+            color: rgb(240, 239, 239);
+        }
+
+        .speed:hover,
+        .mode:hover {
+            background-color: rgba(70, 69, 69, 0.616);
+            cursor: pointer;
+        }
+
+        .speed_container {
+            position: absolute;
+            width: 15rem;
+            height: 20rem;
+            background-color: rgba(161, 161, 161, 0.616);
+            right: 3%;
+            bottom: 10%;
+            display: none;
+            opacity: 1;
+            transition: opacity .3s;
+        }
+
+        .speed_container div {
+            margin-top: 0.5rem;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            padding-top: 0.1rem;
+            padding-bottom: 0.1rem;
+            cursor: pointer;
+            color: rgb(240, 239, 239);
+
+        }
+
+        .speed_container div:hover {
+            background-color: rgba(70, 69, 69, 0.616);
+        }
+
+        /*Contenedor del Mode*/
+
+        .mode_container {
+            width: 13rem;
+            height: 8.5rem;
+            position: absolute;
+            background-color: rgba(161, 161, 161, 0.616);
+            bottom: 10%;
+            right: 3%;
+            display: none;
+            opacity: 1;
+            transition: opacity .3s;
+        }
+
+        .mode_container div {
+            margin-top: 0.5rem;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            padding-top: 0.1rem;
+            padding-bottom: 0.1rem;
+            cursor: pointer;
+            color: rgb(240, 239, 239);
+        }
+
+        .mode_container div:hover {
+            background-color: rgba(70, 69, 69, 0.616);
+        }
+
+
+        /* Contenedor de Intrucciones*/
+
+        .concept_container {
+            width: 30%;
+            height: 85%;
+            margin-bottom: 1rem;
+            background-color: rgb(241, 241, 241);
+            position: absolute;
+            top: 15%;
+            right: 8%;
+            left: 62%;
+            padding: 0 2rem;
+            box-sizing: border-box;
+            overflow-y: scroll;
+        }
+
+        @media (max-width: 1130px) {
+            body {
+                display: block;
+            }
+
+            .concept_container {
+                position: static;
+                width: 100%;
+                left: 0;
+                right: 0;
+                background-color: white;
+                overflow-y: hidden;
+            }
+
+            #div_video {
+                width: 70%;
+            }
+            #canvas_container {
+                left: 50%;
+                right: 50%;
+                transform: translateX(-50%);
+                
+
+            }
+            .counters_container{
+                margin-left: 20%
+            }
+        }
+
+        @media (max-width: 800px) {
+            body {
+                margin: 0;
+            }
+
+            canvas {
+                width: 100vw;
+
+            }
+
+            #div_video {
+                width: 100%;
+                height: 65vh;
+                left: 0;
+                right: 0;
+            }
+            .title{
+                font-size: 1rem;
+            }
+            #whatch_cont h3, #play_cont h3{
+                font-size: 0.8rem;
+            }
+            #canvas_container {
+                left: 0;
+                right: 0;
+                transform: translateX(0);
+                
+
+            }
+        }
+ 
+        @media (max-width: 480px) {
+            #div_video {
+                height: 30vh;
+            }
+            
+            .title{
+                width: 40%;
+            }
+            #whatch_cont{
+                left:60%;
+                right: 40%;
+            }
+           
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <h1 class="title">The Game Of Life</h1>
+        <div id="whatch_cont">
+            <h3 id="whatch">Whatch</h3>
+        </div>
+        <div id="play_cont">
+            <h3 id="play">Play</h3>
+        </div>
+    </header>
+    <section class="counters_container" id="id_counters_container">
+
+        <p id="pop">Population: 0</p>
+        <p id="counterDeads">Deads: 0</p>
+
+    </section>
+
+    <!--Contenedor del canvas-->
+    <section id="canvas_container">
+        <button id="start">Start</button>
+        <button id="grill">#</button>
+        <input onclick="funcAbrir()" type="checkbox" id="setting"></input>
+        <label for="setting" id="setting_label" tabindex="0">Setting</label>
+
+        <!--Contenedor del setting-->
+        <div class="setting_container" id="set_cont">
+            <a href="javascript:abrirMode()" class="mode_a">
+                <div for="mode_input" class="mode">
+                    <p>Mode</p>
+                    <p id="modeMR">Manual ></p>
+                </div>
+            </a>
+
+            <a href="javascript:abrirSpeed()" class="speed_a">
+                <div class="speed">
+                    <p>Speed</p>
+                    <p id="speedLNR">Normal ></p>
+
+                </div>
+            </a>
+
+        </div>
+
+        <!--Contenedor del Speed-->
+        <div class="speed_container" id="speed_cont">
+            <div onclick="muyLento()">
+                <p id="muyLento">Muy lento</p>
+            </div>
+            <div onclick="lento()">
+                <p id="lento">Lento</p>
+            </div>
+            <div onclick="normal()">
+                <p id="normal"> &#10004; Normal</p>
+            </div>
+            <div onclick="rapido()">
+                <p id="rapido">Rápido</p>
+            </div>
+            <div onclick="muyRapido()">
+                <p id="muyRapido">Muy rápido</p>
+            </div>
+
+        </div>
+
+        <!--Contenedor del Mode-->
+
+        <div class="mode_container" id="mode_cont">
+            <div onclick="manual()">
+                <p id="manual"> &#10004; Manual</p>
+            </div>
+            <div onclick="aleatorio()">
+                <p id="aleatorio">Random</p>
+            </div>
+        </div>
+
+
+
+
+
+    </section>
+
+    <!--Concepto e instrucciones del juego-->
+    <section class="concept_container">
+        <p>El juego de la vida es un autómata celular diseñado por el matemático británico <a
+                href="https://es.wikipedia.org/wiki/John_Horton_Conway" target="_bank">John Horton Conway</a> en 1970.
+            <br><br>
+            El juego consiste en configurar un estado inicial de células las cuales deberán vivir o morir según 2
+            sencillas
+            reglas: <br>
+        <ul>
+            <li>Una célula muerta vivirá si tiene tres vecinas vivas.</li>
+            <li>Una célula viva seguirá viva si tiene dos o tres vecinas vivas, caso contrario morirá
+                de soledad o por sobrepoblación.
+            </li>
+        </ul>
+        <h3>Instrucciones</h2>
+            <strong>Modo manual:</strong> Deberás configurar el estado inicial de las celdas, haciendo click en ellas
+            para darles vida. <br><br>
+            <strong>Modo aleatorio:</strong> Debes configurar este modo en el boton <strong>"settings"</strong> para que
+            el estado
+            inicial sea elegido aleatoriamente por el algoritmo. <br>
+            <br> Presiona el boton <strong>"Start"</strong> y empezará la evolución del juego según el estado inicial.
+            Recuerda que su evolución
+            depende de las dos reglas del juego.
+            </p>
+
+    </section>
+
+    <script src="index.js"></script>
+
+    <script>
+        //Efectos de STYLES
+
+
+        function abrirSpeed() {
+            document.getElementById("speed_cont").style.display = "block";
+            document.getElementById("set_cont").style.display = "none";
+
+        }
+
+        function abrirMode() {
+            document.getElementById("mode_cont").style.display = "block"
+            document.getElementById("set_cont").style.display = "none";
+        }
+
+        //Función que me abre el setting y me cierra cualquiera de las ventanas abiertas del setting
+        let flag = true;
+        function funcAbrir() {
+            if (flag) {
+                document.getElementById("set_cont").style.display = "block";
+                document.getElementById("set_cont").style.opacity = "1"
+                document.getElementById("speed_cont").style.opacity = "1"
+                document.getElementById("mode_cont").style.opacity = "1"
+                flag = false
+            } else {
+                document.getElementById("set_cont").style.opacity = "0"
+                setTimeout(() => document.getElementById("set_cont").style.display = "none", 300);
+                document.getElementById("speed_cont").style.opacity = "0"
+                setTimeout(() => document.getElementById("speed_cont").style.display = "none", 300);
+                document.getElementById("mode_cont").style.opacity = "0"
+                setTimeout(() => document.getElementById("mode_cont").style.display = "none", 300);
+                flag = true
+            }
+        }
+
+
+    </script>
+
+
+</body>
+
+>>>>>>> 1a1bad8d06f6ca47228a33c18acd4a0325a69c46
 </html>
