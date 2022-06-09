@@ -4,360 +4,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Game of life</title>
-    <style>
-        :root {
-            --width: 991px;
-        }
-
-        body {
-            margin: 0;
-            font-family: Cambria;
-            width: 100%;
-        }
-
-        .header {
-            width: 100%;
-            height: 4rem;
-            border-bottom: solid thin rgb(185, 185, 185);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 3rem;
-            box-sizing: border-box;
-        }
-
-        .title {
-            position: relative;
-            width: 30%;
-            margin: 0;
-            font-size: 2rem;
-            
-        }
-
-        .options-cont {
-            display: flex;
-        }
-
-        #whatch_cont,
-        #play_cont {
-            margin-left: 1rem;
-            cursor: pointer;
-        }
-
-        #whatch_cont:hover{
-            color: rgb(114, 114, 114);
-        }
-        #play_cont:hover{
-            color: rgb(114, 114, 114);
-        }
-        #whatch_cont:focus{
-            color: rgb(114, 114, 114);
-        }
-
-        #canvas-section {
-            width: 100%;
-            position: relative;
-        }
-
-        .counter-canvas {
-            width: var(--width);
-            margin: auto;
-        }
-
-        .counters_container {
-            display: flex;
-            justify-content: flex-start;
- 
-            margin-left: 8%;
-        }
-
-        #counterDeads {
-            margin-left: 3%;
-        }
-
-        #canvas_container {  
-            position: relative;
-            margin: auto;
-        }
-
-        canvas {
-            background-color: rgb(0, 0, 0);
-        }
-
-        #canvas-buttons {
-            position: relative;
-            display: flex;
-            justify-content: space-between;
-            padding: 0.5rem 1rem 0.5rem 1rem;
-            margin-bottom: 0.3rem;
-            border-bottom: solid 1px rgba(161, 161, 161);
-        }
-
-        #start, #grill {
-            width: 5rem;
-            padding: 0.5rem;
-            background-color: rgba(161, 161, 161);
-            border: none;
-            font-family: Cambria;
-            color: rgb(240, 239, 239);
-            font-weight: bold;
-        }
-
-        #setting,
-        #setting_label {
-            width: 5rem;
-            background-color: rgba(161, 161, 161);
-            border: none;
-            border-radius: 0.1rem;
-            padding: 0.5rem;
-            padding-left: 1rem;
-            box-sizing: border-box;
-            color: rgb(230, 230, 230);
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        #setting {
-            display: none;
-        }
-
-        #start,
-        #setting,
-        #grill:hover {
-            cursor: pointer;
-        }
-
-        .setting_container {
-            position: absolute;
-            width: 20rem;
-            height: 8rem;
-            background-color: rgba(161, 161, 161);
-            top: -10rem;
-            right: 0;
-            margin-right: 1rem;
-            display: none;
-            opacity: 1;
-            transition: opacity .3s;
-
-        }
-
-        #mode_input {
-            display: none;
-        }
-
-        .mode {
-            display: flex;
-            width: 100%;
-            background-color: transparent;
-            border: none;
-            justify-content: space-between;
-            padding-left: 1rem;
-            padding-right: 1rem;
-            margin-top: 0.5rem;
-            box-sizing: border-box;
-            color: rgb(240, 239, 239);
-        }
-
-        .speed_a,
-        .mode_a {
-            text-decoration: none;
-            color: rgb(0, 0, 0);
-        }
-
-        .speed {
-            display: flex;
-            width: 100%;
-            background-color: transparent;
-            border: none;
-            justify-content: space-between;
-            padding-left: 1rem;
-            padding-right: 1rem;
-            margin-top: 0.5rem;
-            box-sizing: border-box;
-            color: rgb(240, 239, 239);
-        }
-
-        .speed:hover,
-        .mode:hover {
-            background-color: rgba(70, 69, 69, 0.616);
-            cursor: pointer;
-        }
-
-        .speed_container {
-            position: absolute;
-            width: 15rem;
-            height: 20rem;
-            background-color: rgba(161, 161, 161);
-            right: 0;
-            top: -22rem;
-            margin-right: 1rem;
-            display: none;
-            opacity: 1;
-            transition: opacity .3s;
-        }
-
-        .speed_container div {
-            margin-top: 0.5rem;
-            padding-left: 1rem;
-            padding-right: 1rem;
-            padding-top: 0.1rem;
-            padding-bottom: 0.1rem;
-            cursor: pointer;
-            color: rgb(240, 239, 239);
-
-        }
-
-        .speed_container div:hover {
-            background-color: rgba(70, 69, 69, 0.616);
-        }
-
-        /*Contenedor del Mode*/
-
-        .mode_container {
-            width: 13rem;
-            height: 8.5rem;
-            position: absolute;
-            background-color: rgba(161, 161, 161);
-            top: -10rem;
-            right: 0;
-            display: none;
-            opacity: 1;
-            transition: opacity .3s;
-            margin-right: 1rem;
-        }
-
-        .mode_container div {
-            margin-top: 0.5rem;
-            padding-left: 1rem;
-            padding-right: 1rem;
-            padding-top: 0.1rem;
-            padding-bottom: 0.1rem;
-            cursor: pointer;
-            color: rgb(240, 239, 239);
-        }
-
-        .mode_container div:hover {
-            background-color: rgba(70, 69, 69, 0.616);
-        }
-
-        #div_video {
-            height: 631px;
-            margin-top: 3rem;
-        }
-
-
-        /* Contenedor de Intrucciones*/
-
-        .concept_container {
-            width: 70%;
-            height: 85%;
-            margin: auto;
-            margin-bottom: 1rem;
-            background-color: rgb(241, 241, 241, .2);
-            position: static;
-            top: 15%;
-            padding: 1rem 2rem;
-            box-sizing: border-box;
-            
-        }
-
-        /* Footer */
-
-        .footer {
-            padding: 2.5rem 0;
-            border-top: solid thin rgb(185, 185, 185);
-            text-align: center;
-        }
-
-        .footer small span {
-            font-size: 110%;
-        }
-
-        @media (max-width: 1130px) {
-            body {
-                display: block;
-            }
-
-            .concept_container {
-                background-color: white;
-                margin: 0;
-                width: 100%;
-               
-            }
-
-            #div_video {
-                width: 70%;
-            }
-            #canvas-section {
-                margin: auto;
-            }
-            
-        }
-
-        @media (max-width: 1000px) {
-            body {
-                margin: 0;
-            }
-
-            .counter-canvas {
-                width: 100%;
-            }
-
-            canvas {
-                width: 100vw;
-
-            }
-
-            #div_video {
-                width: 100%;
-                height: 65vh;
-                left: 0;
-                right: 0;
-            }
-            .title{
-                font-size: 1rem;
-            }
-            #whatch_cont h3, #play_cont h3{
-                font-size: 0.8rem;
-            }
-           
-        }
- 
-        @media (max-width: 480px) {
-            #div_video {
-                height: 30vh;
-            }
-            
-            .title{
-                width: 40%;
-            }
-            #whatch_cont{
-                left:60%;
-                right: 40%;
-            }
-
-            .concept_container {
-                font-size: 0.85rem;
-            }
-
-            .rights-reserved {
-                display: none;
-            }
-           
-        }
-    </style>
+    <link rel="stylesheet" href="./index.css">
+    <title>The Game of Life</title>
+    
 </head>
 
 <body>
     <header class="header">
-        <h1 class="title">The Game Of Life</h1>
+        <div style="display: flex;align-items: center;">
+            <h3 class="title">The Game Of Life</h3>
+        </div>
         <div class="options-cont">
-            <div id="whatch_cont">
-                <h3 id="whatch">Whatch</h3>
+            <div id="watch_cont">
+                <button class="nav-btn" id="watch">Media</button>
             </div>
             <div id="play_cont">
-                <h3 id="play">Play</h3>
+                <button class="nav-btn"  id="play">Game</button>
+            </div>
+            <div id="sound_cont">
+                <button type="button" class="nav-btn"  id="play-btn">Sound <span id="audio-on-off" toggle="off">OFF</span></button>
             </div>
         </div>
         
@@ -377,12 +42,12 @@
             </div>
             <div id="canvas-buttons">
                 <div>
-                    <button id="start">Start</button>
-                    <button id="grill">#</button>
+                    <button class="set-game" id="start">Start</button>
+                    <button class="set-game" id="grill">#</button>
                 </div>
                 
                 <input onclick="funcAbrir()" type="checkbox" id="setting"></input>
-                <label for="setting" id="setting_label" tabindex="0">Setting</label>
+                <label class="set-game" for="setting" id="setting_label" tabindex="0">Setting</label>
         
                 <!--Contenedor del setting-->
                 <div class="setting_container" id="set_cont">
@@ -435,40 +100,12 @@
                 </div>
             </div>
         </div>
-    
-    </section>
-
-    
-    <!--Concepto e instrucciones del juego-->
-    <section class="concept_container">
-        <p>El juego de la vida es un autómata celular diseñado por el matemático británico <a
-                href="https://es.wikipedia.org/wiki/John_Horton_Conway" target="_bank">John Horton Conway</a> en 1970.
-            <br><br>
-            El juego consiste en configurar un estado inicial de células las cuales deberán vivir o morir según 2
-            sencillas
-            reglas: <br>
-        <ul>
-            <li>Una célula muerta vivirá si tiene tres vecinas vivas.</li>
-            <li>Una célula viva seguirá viva si tiene dos o tres vecinas vivas, caso contrario morirá
-                de soledad o por sobrepoblación.
-            </li>
-        </ul>
-        <h3>Instrucciones</h2>
-            <strong>Modo manual:</strong> Deberás configurar el estado inicial de las celdas, haciendo click en ellas
-            para darles vida. <br><br>
-            <strong>Modo aleatorio:</strong> Debes configurar este modo en el boton <strong>"settings"</strong> para que
-            el estado
-            inicial sea elegido aleatoriamente por el algoritmo. Por motivos prácticos la versión mobile viene en Modo Aleatorio por defecto. <br>
-            <br> Presiona el boton <strong>"Start"</strong> y empezará la evolución del juego según el estado inicial.
-            Recuerda que su evolución
-            depende de las dos reglas del juego.
-            </p>
-
     </section>
 
     <footer class="footer">
+        
         <small>
-            <span>Develop by <a>Douglas V.</a> &copy</span>
+            <span>Develop by <a href="https://www.douglasvg.com">Douglas V.</a> &copy</span>
                 <script>
                     let d =  new Date();
                     document.write(d.getFullYear());
@@ -477,12 +114,31 @@
         </small>
     </footer>
 
+    <audio id="audio" loop>
+        <source src="./assets/audio/cosmo-ambient.mp3" type="audio/mpeg">
+    </audio>
+
     <script src="index.js"></script>
 
     <script>
-        //Efectos de STYLES
-
-
+        //PLAY AUDIO SETTINGS
+        let playAudioBtn = document.getElementById('play-btn');
+        playAudioBtn.onclick = () => {
+            let audioTag = document.getElementById('audio');
+            
+            let onOff = document.getElementById('audio-on-off');
+            if (onOff.getAttribute('toggle') == "on") {
+                onOff.setAttribute('toggle', 'off');
+                onOff.textContent = 'OFF';
+                audioTag.pause();
+            }else {
+                onOff.setAttribute('toggle', 'on');
+                onOff.textContent = 'ON';
+                audioTag.play();
+            }
+        }
+        
+        ///////
         function abrirSpeed() {
             document.getElementById("speed_cont").style.display = "block";
             document.getElementById("set_cont").style.display = "none";

@@ -16,7 +16,6 @@ let run;
 //Funciones para cambiar la velocidad
 
 function normal() {
-
     vel = 50;
     console.log(vel)
     document.getElementById("muyLento").innerHTML = "Muy lento"
@@ -24,13 +23,9 @@ function normal() {
     document.getElementById("normal").innerHTML = "&#10004; Normal"
     document.getElementById("rapido").innerHTML = "Rápido"
     document.getElementById("muyRapido").innerHTML = "Muy rápido"
-
     document.getElementById("speedLNR").innerHTML = "Normal >"
-
-
 }
 function muyLento() {
-
     vel = 300;
     console.log(vel)
     document.getElementById("muyLento").innerHTML = "&#10004; Muy lento"
@@ -38,13 +33,9 @@ function muyLento() {
     document.getElementById("normal").innerHTML = "Normal"
     document.getElementById("rapido").innerHTML = "Rápido"
     document.getElementById("muyRapido").innerHTML = "Muy rápido"
-
     document.getElementById("speedLNR").innerHTML = "Muy lento >"
-
-
 }
 function lento() {
-
     vel = 150;
     console.log(vel)
     document.getElementById("muyLento").innerHTML = "Muy lento"
@@ -52,12 +43,9 @@ function lento() {
     document.getElementById("normal").innerHTML = "Normal"
     document.getElementById("rapido").innerHTML = "Rápido"
     document.getElementById("muyRapido").innerHTML = "Muy rápido"
-
     document.getElementById("speedLNR").innerHTML = "Lento >"
-
 }
 function rapido() {
-
     vel = 30;
     console.log(vel)
     document.getElementById("muyLento").innerHTML = "Muy lento"
@@ -65,9 +53,7 @@ function rapido() {
     document.getElementById("normal").innerHTML = "Normal"
     document.getElementById("rapido").innerHTML = "&#10004; Rápido"
     document.getElementById("muyRapido").innerHTML = "Muy rápido"
-
     document.getElementById("speedLNR").innerHTML = "Rápido >"
-
 }
 function muyRapido() {
     vel = 10;
@@ -78,7 +64,6 @@ function muyRapido() {
     document.getElementById("rapido").innerHTML = "Rápido"
     document.getElementById("muyRapido").innerHTML = "&#10004; Muy rápido"
     document.getElementById("speedLNR").innerHTML = "Muy rápido >"
-
 }
 
 //Creo canvas desde javascript. Las medidas del canvas están en función del número de columnas y celdas.
@@ -98,13 +83,15 @@ let media = window.matchMedia("(max-width: 1000px)");
 function checkViewport(media) {
     if (media.matches) {
         aleatorio();
+    }else {
+        aleatorio();
     }
 }
 media.addEventListener("change", checkViewport);
 checkViewport(media);
 
 //Introduciendo vídeo
-let whatch = document.getElementById('whatch_cont');
+let whatch = document.getElementById('watch_cont');
 whatch.onclick = options;
 
 function options() {
@@ -267,8 +254,8 @@ let nextState = function () {
 
     for (let indice = 0; indice < cells.length; indice++) {
 
-        let trueNeighbors = neighborsState(indice);
-        //let trueNeighbors = countNeighbors(indice);  //VERSIÓN PAUL
+        // let trueNeighbors = neighborsState(indice);
+        let trueNeighbors = countNeighbors(indice);  //VERSIÓN PAUL
 
         if (trueNeighbors === 3 && cells[indice] === false) {
             tmpCells[indice] = cells[indice];
@@ -318,382 +305,6 @@ function clearCanvas() {
 
 }
 
-//Debo crear la función que analice los vecinos en el lienzo1 que son true y los guarde en trueNeighbors.
-
-
-function neighborsState(indice) {
-
-    let trueNeighbors = 0;
-    let index;
-    let row;
-    let col;
-
-    let rowI = Math.trunc(indice / cols);
-    let colI = indice - rowI * cols;
-    //debugger
-    if (rowI === 0) {
-        //Analizamos vecinos de encima
-        //Vecino de encima - izquierda
-        if (colI === 0) {
-            row = rows - 1;
-            col = cols - 1;
-            index = (row * cols) + col;
-            if (cells[index]) {
-                trueNeighbors = trueNeighbors + 1;
-            }
-        } else {
-            row = rows - 1;
-            col = colI - 1;
-            index = (row * cols) + col;
-            if (cells[index]) {
-                trueNeighbors = trueNeighbors + 1;
-            }
-
-        }
-        //Vecino de encima
-        row = rows - 1;
-        col = colI
-        index = (row * cols) + col;
-        if (cells[index]) {
-            trueNeighbors = trueNeighbors + 1;
-        }
-        //Vecino de encima - derecha
-        if (colI === (cols - 1)) {
-            row = rows - 1;
-            col = 0;
-            index = (row * cols) + col;
-            if (cells[index]) {
-                trueNeighbors = trueNeighbors + 1;
-            }
-        } else {
-            row = rows - 1;
-            col = colI + 1;
-            index = (row * cols) + col;
-            if (cells[index]) {
-                trueNeighbors = trueNeighbors + 1;
-            }
-        }
-
-        //Analizamos vecinos de ambos lados
-        //Vecino de la izquierda
-        if (colI === 0) {
-            row = rowI;
-            col = cols - 1;
-            index = (row * cols) + col;
-            if (cells[index]) {
-                trueNeighbors = trueNeighbors + 1;
-            }
-        } else {
-            index = indice - 1;
-            if (cells[index]) {
-                trueNeighbors = trueNeighbors + 1;
-            }
-        }
-        // Vecino de la derecha
-        if (colI === (cols - 1)) {
-            row = rowI;
-            col = 0;
-            index = 0;
-            if (cells[index]) {
-                trueNeighbors = trueNeighbors + 1;
-            }
-        } else {
-            index = indice + 1;
-            if (cells[index]) {
-                trueNeighbors = trueNeighbors + 1;
-            }
-        }
-
-        //Analizamos vecinos de abajo
-        //Vecino de abajo - izquierda
-        if (colI === 0) {
-            row = rowI + 1;
-            col = cols - 1;
-            index = (row * cols) + col;
-            if (cells[index]) {
-                trueNeighbors = trueNeighbors + 1;
-            }
-        } else {
-            row = rowI + 1;
-            col = colI - 1;
-            index = (row * cols) + col;
-            if (cells[index]) {
-                trueNeighbors = trueNeighbors + 1;
-            }
-        }
-        //Vecino de abajo
-        row = rowI + 1;
-        col = colI;
-        index = (row * cols) + col;
-        if (cells[index]) {
-            trueNeighbors = trueNeighbors + 1;
-        }
-        //Vecino de abajo - derecha
-        if (colI === (cols - 1)) {
-            row = rowI + 1;
-            col = 0;
-            index = (row * cols) + col;
-            if (cells[index]) {
-                trueNeighbors = trueNeighbors + 1;
-            }
-        } else {
-            row = rowI + 1;
-            col = colI + 1;
-            index = (row * cols) + col;
-            if (cells[index]) {
-                trueNeighbors = trueNeighbors + 1;
-            }
-        }
-    }
-
-    //Analizamos las celdas que no son fila 0 ni la última fila.
-    if (rowI != 0 && rowI != (rows - 1)) {
-        //vecinos de la izquierda
-        if (colI === 0) {
-            row = rowI;
-            col = cols - 1;
-            index = (row * cols) + col;
-            if (cells[index]) {
-                trueNeighbors = trueNeighbors + 1;
-            }
-        } else {
-            index = indice - 1;
-            if (cells[index]) {
-                trueNeighbors = trueNeighbors + 1;
-            }
-        }
-        //Vecinos de la derecha
-
-        if (colI === (cols - 1)) {
-            row = rowI;
-            col = 0;
-            index = (row * cols) + col;
-            if (cells[index]) {
-                trueNeighbors = trueNeighbors + 1;
-            }
-        } else {
-            index = indice + 1;
-            if (cells[index]) {
-                trueNeighbors = trueNeighbors + 1;
-            }
-        }
-        //Vecinos de arriba-izquierda
-
-        if (colI === 0) {
-            row = rowI - 1;
-            col = cols - 1;
-            index = (row * cols) + col;
-            if (cells[index]) {
-                trueNeighbors = trueNeighbors + 1;
-            }
-        } else {
-            row = rowI - 1;
-            col = colI - 1;
-            index = (row * cols) + col;
-            if (cells[index]) {
-                trueNeighbors = trueNeighbors + 1;
-            }
-        }
-
-        //vecino de arriba
-        row = rowI - 1;
-        col = colI;
-        index = (row * cols) + col;
-        if (cells[index]) {
-            trueNeighbors = trueNeighbors + 1;
-        }
-
-        //vecino de arriba - derecha
-
-        if (colI === (cols - 1)) {
-            row = rowI - 1;
-            col = 0;
-            index = (row * cols) + col;
-            if (cells[index]) {
-                trueNeighbors = trueNeighbors + 1;
-            }
-        } else {
-            row = rowI - 1;
-            col = colI + 1;
-            index = (row * cols) + col;
-            if (cells[index]) {
-                trueNeighbors = trueNeighbors + 1;
-            }
-        }
-
-        //vecino de abajo - izquierda
-
-        if (colI === 0) {
-            row = rowI + 1;
-            col = cols - 1;
-            index = (row * cols) + col;
-            if (cells[index]) {
-                trueNeighbors = trueNeighbors + 1;
-            }
-        } else {
-            row = rowI + 1;
-            col = colI - 1;
-            index = (row * cols) + col;
-            if (cells[index]) {
-                trueNeighbors = trueNeighbors + 1;
-            }
-        }
-        //vecino de abajo
-
-        row = rowI + 1;
-        col = colI;
-        index = (row * cols) + col;
-        if (cells[index]) {
-            trueNeighbors = trueNeighbors + 1;
-        }
-
-        //vecino de abajo - derecha
-        if (colI === (cols - 1)) {
-            row = rowI + 1;
-            col = 0;
-            index = (row * cols) + col;
-            if (cells[index]) {
-                trueNeighbors = trueNeighbors + 1;
-            }
-        } else {
-            row = rowI + 1;
-            col = colI + 1;
-            index = (row * cols) + col;
-            if (cells[index]) {
-                trueNeighbors = trueNeighbors + 1;
-            }
-        }
-    }
-
-    //Analizamos los vecinos cuando el indice esté en la ultima fila
-
-
-    if (rowI === (rows - 1)) {
-        //Analizamos vecinos de arriba
-        //vecino de arriba - izquierda
-        if (colI === 0) {
-            row = rowI - 1;
-            col = cols - 1;
-            index = (row * cols) + col;
-            if (cells[index]) {
-                trueNeighbors = trueNeighbors + 1;
-            }
-        } else {
-            row = rowI - 1;
-            col = colI - 1;
-            index = (row * cols) + col;
-            if (cells[index]) {
-                trueNeighbors = trueNeighbors + 1;
-            }
-        }
-
-        //vecino arriba
-        row = rowI - 1;
-        col = colI;
-        index = (row * cols) + col;
-        if (cells[index]) {
-            trueNeighbors = trueNeighbors + 1;
-        }
-
-        //vecino de arriba - izquierda
-        if (colI === (cols - 1)) {
-            row = rowI - 1;
-            col = 0;
-            index = (row * cols) + col;
-            if (cells[index]) {
-                trueNeighbors = trueNeighbors + 1;
-            }
-        } else {
-            row = rowI - 1;
-            col = colI + 1;
-            index = (row * cols) + col;
-            if (cells[index]) {
-                trueNeighbors = trueNeighbors + 1;
-            }
-        }
-
-        //Analizamos los vecinos de los lados
-        //vecino de la izquierda
-        if (colI === 0) {
-            row = rowI;
-            col = cols - 1;
-            index = (row * cols) + col;
-            if (cells[index]) {
-                trueNeighbors = trueNeighbors + 1;
-            }
-        } else {
-            /* col = colI - 1;
-             row = rowI;
-             index = (row * cols) + col;*/
-            index = indice - 1;
-            if (cells[index]) {
-                trueNeighbors = trueNeighbors + 1;
-            }
-        }
-
-        //vecino de la derecha
-        if (colI === (cols - 1)) {
-            row = rowI;
-            col = 0;
-            index = (row * cols) + col;
-            if (cells[index]) {
-                trueNeighbors = trueNeighbors + 1;
-            }
-        } else {
-            /*col = colI + 1;
-            row = rowI;
-            index = (row * cols) + col;*/
-            index = indice + 1;
-            if (cells[index]) {
-                trueNeighbors = trueNeighbors + 1;
-            }
-        }
-        //Analizamos los vecinos de abajo
-        //vecino abajo - izquierda
-        if (colI === 0) {
-            row = 0;
-            col = cols - 1;
-            index = (row * cols) + col;
-            if (cells[index]) {
-                trueNeighbors = trueNeighbors + 1;
-            }
-        } else {
-            row = 0;
-            col = colI - 1;
-            index = (row * cols) + col;
-            if (cells[index]) {
-                trueNeighbors = trueNeighbors + 1;
-            }
-        }
-        //vecino de abajo
-        row = 0;
-        col = colI;
-        index = (row * cols) + col;
-        if (cells[index]) {
-            trueNeighbors = trueNeighbors + 1;
-        }
-
-        //vecino de abajo - derecha
-        if (colI === (cols - 1)) {
-            row = 0;
-            col = 0;
-            index = (row * cols) + col;
-            if (cells[index]) {
-                trueNeighbors = trueNeighbors + 1;
-            }
-        } else {
-            row = 0;
-            col = colI + 1;
-            index = (row * cols) + col;
-            if (cells[index]) {
-                trueNeighbors = trueNeighbors + 1;
-            }
-        }
-    }
-    return trueNeighbors;
-}
-
-
 //Función para inciar y pausar el tablero
 
 function StartPause() {
@@ -728,6 +339,7 @@ function linesOnState() {
 //Evento click para cambiar el estado de la variable "linesOn" que activa o desactiva las cuadriculas.
 let botonCuadriculas = document.getElementById("grill");
 botonCuadriculas.addEventListener("click", () => { linesOnState(); dibujarLineas() });
+botonCuadriculas.click();
 
 
 // FUNCIÓN QUE ANALIZA LOS VECINOS (VERSIÓN MEJORADA DE PAUL)
@@ -778,8 +390,6 @@ function countNeighbors(index) {
 
 
 //FUNCIÓN QUE GENERA EL ARRAY ALEATORIO
-
-
 
 function manual() {
     cells.fill(false);
